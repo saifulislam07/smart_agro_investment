@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'FAQ | GrowUp Agrotech'])
+﻿@extends('layouts.app', ['title' => 'FAQ | Smart Agro'])
 
 @section('content')
     <header class="page-hero compact">
@@ -26,3 +26,4 @@
         </div>
     </main>
 @endsection
+

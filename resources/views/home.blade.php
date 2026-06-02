@@ -71,35 +71,13 @@
         </div>
         <div class="carousel-inner">
             @foreach ([
-                ['eyebrow' => 'Certified agro investment platform', 'title' => 'Invest in agriculture with transparent project cycles.', 'copy' => 'Smart Agro bridges resource and knowledge gaps by connecting farmers, investors, quality inputs, products, and rural property opportunities.', 'image' => 'https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?auto=format&fit=crop&w=1400&q=85', 'bg' => 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2200&q=85'],
-                ['eyebrow' => 'Field-backed operations', 'title' => 'From farmer onboarding to market-ready produce.', 'copy' => 'Every project is designed around field monitoring, disciplined procurement, and clear reporting for stakeholders.', 'image' => 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1400&q=85', 'bg' => 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=2200&q=85'],
-                ['eyebrow' => 'Products, properties and impact', 'title' => 'Build a smarter agriculture portfolio.', 'copy' => 'Explore live projects, verified products, agro-backed properties, news, blogs, and NGO activities from one platform.', 'image' => 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=85', 'bg' => 'https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=2200&q=85'],
+                ['image' => 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2400&q=88', 'alt' => 'Wide agricultural field at sunrise'],
+                ['image' => 'https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?auto=format&fit=crop&w=2400&q=88', 'alt' => 'Farmers working in a green agriculture field'],
+                ['image' => 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=2400&q=88', 'alt' => 'Young crop seedlings growing in soil'],
             ] as $slide)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                    <div class="hero" style="--hero-bg: url('{{ $slide['bg'] }}')">
-                        <div class="container">
-                            <div class="row align-items-center g-5">
-                                <div class="col-lg-6">
-                                    <div class="eyebrow mb-3">{{ $slide['eyebrow'] }}</div>
-                                    <h1 class="display-4 fw-bold mb-4">{{ $slide['title'] }}</h1>
-                                    <p class="lead mb-4">{{ $slide['copy'] }}</p>
-                                    <div class="d-flex flex-wrap gap-3">
-                                        <a href="{{ route('projects.index') }}" class="btn btn-primary btn-lg"><i class="bi bi-graph-up-arrow me-2"></i>Explore Projects</a>
-                                        <a href="{{ route('about') }}" class="btn btn-light btn-lg"><i class="bi bi-patch-check me-2"></i>View Certifications</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="hero-media">
-                                        <img src="{{ $slide['image'] }}" alt="{{ $slide['title'] }}">
-                                        <div class="hero-panel">
-                                            <span class="text-uppercase small">Live projects</span>
-                                            <strong>{{ $projects->where('is_live', true)->count() }}</strong>
-                                            <span>Collecting investment now</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="hero-image-slide">
+                        <img src="{{ $slide['image'] }}" alt="{{ $slide['alt'] }}">
                     </div>
                 </div>
             @endforeach
@@ -171,18 +149,18 @@
                         <h2 class="fw-bold mt-2">Featured Investment Projects</h2>
                     </div>
                     <div class="project-tabs">
-                        <span>All Projects {{ $projects->count() }}</span>
-                        <span>Live {{ $projects->where('is_live', true)->count() }}</span>
-                        <span>Mature {{ $projects->where('is_live', false)->count() }}</span>
+                        <button class="active" type="button" data-project-filter="all">All Projects {{ $projects->count() }}</button>
+                        <button type="button" data-project-filter="live">Live {{ $projects->where('is_live', true)->count() }}</button>
+                        <button type="button" data-project-filter="mature">Mature {{ $projects->where('is_live', false)->count() }}</button>
                     </div>
                 </div>
-                <div class="row g-4">
+                <div class="row g-4" id="featuredProjectsGrid">
                     @foreach ($projects as $project)
                         @php
                             $waiting = max((float) $project->goal - (float) $project->raised, 0);
                             $progress = min(100, ((float) $project->raised / (float) $project->goal) * 100);
                         @endphp
-                        <div class="col-md-6 col-xl-4">
+                        <div class="col-md-6 col-xl-4" data-project-status="{{ $project->is_live ? 'live' : 'mature' }}">
                             <article class="project-card">
                                 <div class="project-image">
                                     <img src="{{ $project->image }}" alt="{{ $project->title }}">
@@ -320,14 +298,20 @@
                     @foreach ($posts as $post)
                         <div class="col-md-4">
                             <article class="simple-card">
-                                <img src="{{ $post->image }}" alt="{{ $post->title }}">
+                                @php
+                                    $postUrl = $post->type === 'Blog' ? route('blogs.show', $post) : route('news.show', $post);
+                                @endphp
+                                <a href="{{ $postUrl }}">
+                                    <img src="{{ $post->image }}" alt="{{ $post->title }}">
+                                </a>
                                 <div class="p-4">
                                     <div class="d-flex justify-content-between small text-muted mb-3">
                                         <span>{{ $post->type }}</span>
                                         <span>{{ $post->published_at->format('d M Y') }}</span>
                                     </div>
-                                    <h3 class="h5 fw-bold">{{ $post->title }}</h3>
+                                    <h3 class="h5 fw-bold"><a class="text-reset" href="{{ $postUrl }}">{{ $post->title }}</a></h3>
                                     <p class="text-muted mb-0">{{ $post->excerpt }}</p>
+                                    <a class="read-link d-inline-block mt-3" href="{{ $postUrl }}">Read More <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </article>
                         </div>

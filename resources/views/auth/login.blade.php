@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Login | GrowUp Agrotech'])
+﻿@extends('layouts.app', ['title' => 'Login | Smart Agro'])
 
 @section('content')
     <main class="auth-wrap">
@@ -28,3 +28,4 @@
         </div>
     </main>
 @endsection
+

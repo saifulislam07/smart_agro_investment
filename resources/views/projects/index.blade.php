@@ -56,21 +56,14 @@
                 </div>
             </form>
 
+            <div class="project-summary-strip mb-4">
+                <span><strong>{{ $quickStats['total'] }}</strong>Total projects</span>
+                <span><strong>{{ $quickStats['live'] }}</strong>Live projects</span>
+                <span><strong>BDT {{ number_format($quickStats['raised']) }}</strong>Total raised</span>
+                <span><strong>BDT {{ number_format($quickStats['goal']) }}</strong>Total goal</span>
+            </div>
             <div class="row g-4">
-                <aside class="col-lg-3">
-                    <div class="sidebar-box">
-                        <span class="eyebrow">Quick Summary</span>
-                        <div class="mini-stat mt-3"><strong>{{ $quickStats['total'] }}</strong><span>Total projects</span></div>
-                        <div class="mini-stat"><strong>{{ $quickStats['live'] }}</strong><span>Live projects</span></div>
-                        <div class="mini-stat"><strong>BDT {{ number_format($quickStats['raised']) }}</strong><span>Total raised</span></div>
-                        <div class="mini-stat"><strong>BDT {{ number_format($quickStats['goal']) }}</strong><span>Total goal</span></div>
-                        <div class="tip-box mt-3">
-                            <strong>Investment tip</strong>
-                            <p class="mb-0">Compare maturity date, project duration, and minimum investment before submitting an amount.</p>
-                        </div>
-                    </div>
-                </aside>
-                <div class="col-lg-9">
+                <div class="col-12">
                     <div class="row g-4">
                         @forelse ($projects as $project)
                             @php

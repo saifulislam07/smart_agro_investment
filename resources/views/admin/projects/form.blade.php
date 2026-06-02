@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => ($project->exists ? 'Edit' : 'Create') . ' Project | GrowUp Agrotech'])
+﻿@extends('layouts.app', ['title' => ($project->exists ? 'Edit' : 'Create') . ' Project | Smart Agro'])
 
 @section('content')
     <header class="page-hero compact">
@@ -54,3 +54,4 @@
         </div>
     </main>
 @endsection
+
