@@ -17,8 +17,8 @@
                     <div class="content-box h-100 animate-soft">
                         <h2 class="h4 fw-bold">Office</h2>
                         <p>Ambon Complex 99, Mohakhali C/A, Dhaka 1212</p>
-                        <p><strong>Phone:</strong> +8801713269591, 09611677833</p>
-                        <p><strong>Email:</strong> info@growupagro.tech</p>
+                        <p><strong>Phone:</strong> 017********</p>
+                        <p><strong>Email:</strong> info@smartagro.com</p>
                         <div class="map-box">Dhaka Office Map Placeholder</div>
                     </div>
                 </div>

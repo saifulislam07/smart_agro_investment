@@ -14,8 +14,8 @@
     <div class="topbar py-2 d-none d-lg-block">
         <div class="container d-flex align-items-center gap-4 small">
             <div class="d-flex gap-4">
-                <span><i class="bi bi-envelope me-2"></i>info@growupagro.tech</span>
-                <span><i class="bi bi-telephone me-2"></i>+8801713269591</span>
+                <span><i class="bi bi-envelope me-2"></i>info@smartagro.com</span>
+                <span><i class="bi bi-telephone me-2"></i>017********</span>
             </div>
             <div class="top-marquee">
                 <div class="top-marquee-track">
@@ -96,9 +96,9 @@
                 <div class="col-6 col-lg-3">
                     <h3 class="h6">Get In Touch</h3>
                     <span>Ambon Complex 99, Mohakhali C/A, Dhaka</span>
-                    <span>+8801713269591</span>
-                    <span>09611677833</span>
-                    <span>info@growupagro.tech</span>
+                    <span>017********</span>
+                    <span>017********</span>
+                    <span>info@smartagro.com</span>
                 </div>
                 <div class="col-lg-3">
                     <h3 class="h6">Legal</h3>
