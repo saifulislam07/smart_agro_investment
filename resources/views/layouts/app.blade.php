@@ -60,7 +60,7 @@
                         </form>
                     @else
                         <a href="{{ route('login') }}" class="btn btn-outline-dark btn-sm">Login</a>
-                        <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Register</a>
+                        <a href="{{ route('projects.index') }}" class="btn btn-primary btn-sm">Invest Now</a>
                     @endauth
                 </div>
             </div>
