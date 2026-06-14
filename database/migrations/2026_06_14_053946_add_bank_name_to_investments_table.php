@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasColumn('investments', 'payment_bank_name')) {
+            return;
+        }
+
         Schema::table('investments', function (Blueprint $table) {
             $table->string('payment_bank_name')->nullable()->after('payment_account_number');
         });
@@ -21,6 +25,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (!Schema::hasColumn('investments', 'payment_bank_name')) {
+            return;
+        }
+
         Schema::table('investments', function (Blueprint $table) {
             $table->dropColumn('payment_bank_name');
         });
