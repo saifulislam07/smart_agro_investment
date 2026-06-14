@@ -1,14 +1,17 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\InvestmentController as AdminInvestmentController;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\ReportController as AdminReportController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -46,10 +49,17 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::post('/projects/{project}/invest', [InvestmentController::class, 'store'])->name('investments.store');
+    Route::get('/investments/{investment}/edit', [InvestmentController::class, 'edit'])->name('investments.edit');
+    Route::put('/investments/{investment}', [InvestmentController::class, 'update'])->name('investments.update');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', AdminDashboardController::class)->name('dashboard');
         Route::resource('projects', AdminProjectController::class)->except(['show']);
+        Route::resource('investments', AdminInvestmentController::class)->only(['index']);
+        Route::post('/investments/{investment}/approve', [AdminInvestmentController::class, 'approve'])->name('investments.approve');
+        Route::post('/investments/{investment}/reject', [AdminInvestmentController::class, 'reject'])->name('investments.reject');
+        Route::resource('users', AdminUserController::class)->only(['index']);
+        Route::get('/reports/investments', [AdminReportController::class, 'investments'])->name('reports.investments');
     });
 });

@@ -9,21 +9,20 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
-{
-    public function __invoke(Request $request)
-    {
+class DashboardController extends Controller {
+    public function __invoke(Request $request) {
         abort_unless($request->user()->role === 'admin', 403);
 
         $summary = [
-            'projects' => Project::count(),
-            'users' => User::count(),
-            'investments' => Investment::count(),
-            'messages' => ContactMessage::count(),
-            'raised' => Project::sum('raised'),
+            'projects'            => Project::count(),
+            'users'               => User::count(),
+            'investments'         => Investment::count(),
+            'pending_investments' => Investment::where('status', 'pending')->count(),
+            'messages'            => ContactMessage::count(),
+            'raised'              => Project::sum('raised'),
         ];
 
-        $investments = Investment::with(['user', 'project'])->latest('invested_at')->take(10)->get();
+        $investments = Investment::with(['user', 'project', 'approvedBy'])->latest('invested_at')->take(10)->get();
         $messages = ContactMessage::latest()->take(8)->get();
 
         return view('admin.dashboard', compact('summary', 'investments', 'messages'));
